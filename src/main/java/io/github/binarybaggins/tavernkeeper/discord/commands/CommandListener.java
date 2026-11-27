@@ -16,6 +16,12 @@ public final class CommandListener extends ListenerAdapter {
 
     private final CommandRegistry registry;
 
+    /**
+     * Constructs a new {@link CommandListener} with the given
+     * {@link CommandRegistry}.
+     *
+     * @param registry the command registry to use for finding commands
+     */
     public CommandListener(CommandRegistry registry) {
         this.registry = registry;
     }
