@@ -1,6 +1,9 @@
 package io.github.binarybaggins.tavernkeeper.config;
 
 import java.util.function.Function;
+
+import io.github.cdimascio.dotenv.Dotenv;
+
 import java.nio.file.Path;
 
 /**
@@ -14,12 +17,16 @@ public final class ConfigLoader {
     }
 
     /**
-     * Loads the bot configuration from the environment.
+     * Loads the bot configuration from the environment using dotenv.
      *
      * @return the loaded bot configuration
      */
     public static BotConfig load() {
-        return load(System::getenv);
+        var dotenv = Dotenv.configure()
+                .ignoreIfMissing()
+                .load();
+
+        return load(dotenv::get);
     }
 
     /**
