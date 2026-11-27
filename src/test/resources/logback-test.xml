@@ -13,6 +13,10 @@
         name="io.github.binarybaggins.tavernkeeper.discord.commands.CommandListener"
         level="OFF" />
     <logger
+        name="io.github.binarybaggins.tavernkeeper.features.guilds.discord.GuildRegistrationListener"
+        level="OFF" />
+
+    <logger
         name="io.github.binarybaggins.tavernkeeper.discord.commands.DeferredReply"
         level="OFF" />
 
