@@ -7,6 +7,9 @@ import org.slf4j.LoggerFactory;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
+/**
+ * A listener for handling slash command interactions.
+ */
 public final class CommandListener extends ListenerAdapter {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(CommandListener.class);
@@ -17,6 +20,11 @@ public final class CommandListener extends ListenerAdapter {
         this.registry = registry;
     }
 
+    /**
+     * Handles a slash command interaction event.
+     *
+     * @param event the slash command interaction event
+     */
     @Override
     public void onSlashCommandInteraction(
             SlashCommandInteractionEvent event) {
