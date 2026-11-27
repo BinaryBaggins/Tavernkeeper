@@ -1,4 +1,3 @@
-
 package io.github.binarybaggins.tavernkeeper.config;
 
 import org.junit.jupiter.api.Test;

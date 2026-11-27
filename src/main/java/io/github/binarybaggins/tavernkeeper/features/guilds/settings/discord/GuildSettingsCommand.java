@@ -3,11 +3,8 @@ package io.github.binarybaggins.tavernkeeper.features.guilds.settings.discord;
 import java.util.Comparator;
 import java.util.Locale;
 import java.util.Objects;
-import java.util.function.Supplier;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
+import io.github.binarybaggins.tavernkeeper.discord.commands.DeferredReply;
 import io.github.binarybaggins.tavernkeeper.discord.commands.GuildCommandChecks;
 import io.github.binarybaggins.tavernkeeper.discord.commands.SlashCommand;
 import io.github.binarybaggins.tavernkeeper.features.guilds.settings.GuildSettingsService;
@@ -23,8 +20,6 @@ import net.dv8tion.jda.api.interactions.commands.build.SubcommandData;
  * Handles the /settings command for managing guild settings.
  */
 public final class GuildSettingsCommand implements SlashCommand {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(GuildSettingsCommand.class);
 
     private final GuildSettingsService service;
 
@@ -92,7 +87,7 @@ public final class GuildSettingsCommand implements SlashCommand {
 
         String guildId = guild.get().getId();
 
-        replyDeferred(event, () -> {
+        DeferredReply.send(event, () -> {
             var settings = service.getSettings(guildId);
 
             return "**Server settings**\nLanguage: "
@@ -129,34 +124,12 @@ public final class GuildSettingsCommand implements SlashCommand {
 
         String guildId = guild.get().getId();
 
-        replyDeferred(event, () -> {
+        DeferredReply.send(event, () -> {
             service.setLocale(guildId, locale);
 
             return "Server language changed to **"
                     + locale.getDisplayName(Locale.ENGLISH)
                     + "**.";
-        });
-    }
-
-    /**
-     * Replies to the interaction with a deferred response.
-     *
-     * @param event    the slash command interaction event
-     * @param response a supplier that provides the response message
-     */
-    private void replyDeferred(
-            SlashCommandInteractionEvent event,
-            Supplier<String> response) {
-
-        event.deferReply(true).queue(hook -> {
-            try {
-                hook.editOriginal(response.get()).queue();
-            } catch (RuntimeException e) {
-                LOGGER.error("Failed to process guild settings command.", e);
-
-                hook.editOriginal("An unexpected error occurred.")
-                        .queue();
-            }
         });
     }
 }

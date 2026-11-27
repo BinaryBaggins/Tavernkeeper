@@ -1,4 +1,3 @@
-
 package io.github.binarybaggins.tavernkeeper.features.guilds.settings;
 
 import java.util.Locale;

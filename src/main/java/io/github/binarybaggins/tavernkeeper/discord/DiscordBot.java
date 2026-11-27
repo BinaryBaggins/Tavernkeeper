@@ -1,4 +1,3 @@
-
 package io.github.binarybaggins.tavernkeeper.discord;
 
 import java.time.Duration;
