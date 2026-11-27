@@ -1,4 +1,3 @@
-
 package io.github.binarybaggins.tavernkeeper.config;
 
 import java.nio.file.Path;

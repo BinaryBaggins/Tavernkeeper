@@ -1,4 +1,3 @@
-
 package io.github.binarybaggins.tavernkeeper.discord.commands;
 
 import org.slf4j.Logger;

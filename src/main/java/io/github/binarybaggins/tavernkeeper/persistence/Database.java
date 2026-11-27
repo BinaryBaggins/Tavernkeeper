@@ -1,4 +1,3 @@
-
 package io.github.binarybaggins.tavernkeeper.persistence;
 
 import java.io.IOException;

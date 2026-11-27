@@ -1,4 +1,3 @@
-
 package io.github.binarybaggins.tavernkeeper.features.guilds.persistence;
 
 import java.time.Instant;

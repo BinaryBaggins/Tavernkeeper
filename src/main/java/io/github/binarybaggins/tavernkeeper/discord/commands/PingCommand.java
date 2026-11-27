@@ -1,4 +1,3 @@
-
 package io.github.binarybaggins.tavernkeeper.discord.commands;
 
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;

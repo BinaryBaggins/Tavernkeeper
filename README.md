@@ -81,6 +81,46 @@ as this may expose credentials in the generated terminal command.
 The `.env` file, local IDE configuration and runtime database
 are excluded from version control.
 
+## Server configuration
+
+Tavernkeeper supports independent configuration for each
+Discord server.
+
+Optional features are disabled by default and must be
+explicitly enabled by a server administrator. Disabling
+a feature preserves its configuration and accumulated data.
+
+### Available commands
+
+| Command              | Description                                         | Required permission |
+| -------------------- | --------------------------------------------------- | ------------------- |
+| `/ping`              | Check bot responsiveness                            | None                |
+| `/settings show`     | Display server settings                             | None                |
+| `/settings language` | Change the server language                          | Manage Server       |
+| `/features list`     | List available features and their activation states | None                |
+
+Feature activation and deactivation commands will become
+available once optional features are implemented.
+
+### Default settings
+
+- Language: English
+- Optional features: Disabled
+
+Server configuration is persisted in SQLite and retained
+across application restarts.
+
+### Architecture
+
+Tavernkeeper follows a modular monolith architecture:
+
+- Features own their business logic, configuration and persistence.
+- Server configuration is isolated by guild ID.
+- Feature activation is managed centrally through a thread-safe,
+  database-backed cache.
+- Discord permissions are enforced at command execution time.
+- Database schema changes are managed through Flyway.
+
 ## Testing
 
 ```powershell

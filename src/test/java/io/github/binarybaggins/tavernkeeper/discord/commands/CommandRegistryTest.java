@@ -1,4 +1,3 @@
-
 package io.github.binarybaggins.tavernkeeper.discord.commands;
 
 import org.junit.jupiter.api.BeforeEach;
