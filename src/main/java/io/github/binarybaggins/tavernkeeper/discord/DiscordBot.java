@@ -49,5 +49,7 @@ public final class DiscordBot implements AutoCloseable {
             jda.shutdownNow();
             Thread.currentThread().interrupt();
         }
+
+        LOGGER.info("Discord shutdown procedure completed.");
     }
 }
