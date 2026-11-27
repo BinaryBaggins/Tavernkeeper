@@ -22,7 +22,7 @@ public class App {
 
         try {
             config = ConfigLoader.load();
-        } catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException | NullPointerException e) {
             LOGGER.error("Invalid configuration: {}", e.getMessage());
             System.exit(1);
             return;

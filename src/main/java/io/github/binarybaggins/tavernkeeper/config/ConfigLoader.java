@@ -1,11 +1,14 @@
 package io.github.binarybaggins.tavernkeeper.config;
 
 import java.util.function.Function;
+import java.nio.file.Path;
 
 /**
  * Utility class for loading bot configuration from the environment.
  */
 public final class ConfigLoader {
+
+    private static final String DEFAULT_DATABASE_PATH = "data/tavernkeeper.db";
 
     private ConfigLoader() {
     }
@@ -16,8 +19,7 @@ public final class ConfigLoader {
      * @return the loaded bot configuration
      */
     public static BotConfig load() {
-        return new BotConfig(
-                System.getenv("DISCORD_TOKEN"));
+        return load(System::getenv);
     }
 
     /**
@@ -27,7 +29,13 @@ public final class ConfigLoader {
      * @return the loaded bot configuration
      */
     static BotConfig load(Function<String, String> environment) {
-        return new BotConfig(
-                environment.apply("DISCORD_TOKEN"));
+        String token = environment.apply("DISCORD_TOKEN");
+        String databasePath = environment.apply("DATABASE_PATH");
+
+        if (databasePath == null || databasePath.isBlank()) {
+            databasePath = DEFAULT_DATABASE_PATH;
+        }
+
+        return new BotConfig(token, Path.of(databasePath));
     }
 }
