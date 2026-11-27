@@ -12,6 +12,9 @@
     <logger
         name="io.github.binarybaggins.tavernkeeper.discord.commands.CommandListener"
         level="OFF" />
+    <logger
+        name="io.github.binarybaggins.tavernkeeper.features.guilds.discord.GuildRegistrationListener"
+        level="OFF" />
 
     <root level="WARN">
         <appender-ref ref="CONSOLE" />

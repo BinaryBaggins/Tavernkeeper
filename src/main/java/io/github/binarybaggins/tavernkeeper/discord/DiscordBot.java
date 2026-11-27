@@ -12,6 +12,7 @@ import io.github.binarybaggins.tavernkeeper.config.BotConfig;
 import io.github.binarybaggins.tavernkeeper.discord.commands.CommandListener;
 import io.github.binarybaggins.tavernkeeper.discord.commands.CommandRegistry;
 import io.github.binarybaggins.tavernkeeper.features.guilds.GuildRepository;
+import io.github.binarybaggins.tavernkeeper.features.guilds.discord.GuildRegistrationListener;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 
@@ -38,7 +39,9 @@ public final class DiscordBot implements AutoCloseable {
         this.guildRepository = Objects.requireNonNull(guildRepository);
         this.jda = JDABuilder.createLight(config.token())
                 .setEnableShutdownHook(false)
-                .addEventListeners(new CommandListener(registry))
+                .addEventListeners(
+                        new CommandListener(registry),
+                        new GuildRegistrationListener(guildRepository))
                 .build();
     }
 
