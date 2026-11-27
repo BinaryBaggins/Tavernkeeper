@@ -1,4 +1,4 @@
-package io.github.binarybaggins;
+package io.github.binarybaggins.tavernkeeper;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
