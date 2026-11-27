@@ -6,6 +6,8 @@ import org.slf4j.LoggerFactory;
 import io.github.binarybaggins.tavernkeeper.config.BotConfig;
 import io.github.binarybaggins.tavernkeeper.config.ConfigLoader;
 import io.github.binarybaggins.tavernkeeper.discord.DiscordBot;
+import io.github.binarybaggins.tavernkeeper.discord.commands.CommandRegistry;
+import io.github.binarybaggins.tavernkeeper.discord.commands.PingCommand;
 
 public class App {
     private static final Logger LOGGER = LoggerFactory.getLogger(App.class);
@@ -28,10 +30,13 @@ public class App {
 
         LOGGER.info("Configuration loaded successfully.");
 
+        var registry = new CommandRegistry();
+        registry.register(new PingCommand());
+
         final DiscordBot bot;
 
         try {
-            bot = new DiscordBot(config);
+            bot = new DiscordBot(config, registry);
         } catch (RuntimeException e) {
             LOGGER.error("Failed to initialize Discord bot: {}", e.getClass().getSimpleName());
             System.exit(1);
