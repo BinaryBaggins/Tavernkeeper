@@ -16,24 +16,76 @@ Early development.
 
 ## Configuration
 
-Copy `.env.example` to `.env` and provide your Discord bot token:
+Tavernkeeper supports configuration through environment
+variables and an optional `.env` file.
 
-    DISCORD_TOKEN=your_bot_token
+Copy `.env.example` to `.env` in the project root and
+provide your Discord bot token.
 
-Never commit the `.env` file or share your bot token.
+| Variable        | Required | Default                | Description                      |
+| --------------- | -------- | ---------------------- | -------------------------------- |
+| `DISCORD_TOKEN` | Yes      | —                      | Discord bot authentication token |
+| `DATABASE_PATH` | No       | `data/tavernkeeper.db` | SQLite database location         |
 
-## Local development
+Configuration is resolved in the following order:
+
+1. Environment variables
+2. Local `.env` file
+3. Application defaults
+
+Environment variables take precedence over values defined
+in `.env`.
+
+Never commit the `.env` file or share your Discord bot token.
+
+## Local development (Visual Studio Code)
 
 1. Clone the repository.
 2. Install Java 25 and Maven.
 3. Open the project in Visual Studio Code.
-4. Configure a Java launch configuration with `.env`
-   as its environment file.
-5. Run the application.
+4. Install the Extension Pack for Java.
+5. Configure the `.env` file.
+6. Create `.vscode/launch.json` with the following configuration:
+
+   ```json
+   {
+     "version": "0.2.0",
+     "configurations": [
+       {
+         "type": "java",
+         "name": "Tavernkeeper",
+         "request": "launch",
+         "mainClass": "io.github.binarybaggins.tavernkeeper.App",
+         "cwd": "${workspaceFolder}",
+         "vmArgs": "--enable-native-access=ALL-UNNAMED",
+         "console": "integratedTerminal"
+       }
+     ]
+   }
+   ```
+
+7. Press `F5` to start Tavernkeeper.
+8. Press `Ctrl+C` in the integrated terminal to shut down
+   Tavernkeeper gracefully.
+
+The database and its parent directory are created automatically
+during application startup. Database migrations are managed
+by Flyway.
+
+### Security
+
+Tavernkeeper loads `.env` directly through dotenv-java.
+Do not configure `envFile` in the VS Code launch configuration,
+as this may expose credentials in the generated terminal command.
+
+The `.env` file, local IDE configuration and runtime database
+are excluded from version control.
 
 ## Testing
 
-    mvn clean verify
+```powershell
+mvn clean verify
+```
 
 Unit tests do not require a Discord connection or bot token.
 
