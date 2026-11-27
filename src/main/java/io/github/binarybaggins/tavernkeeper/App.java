@@ -1,6 +1,7 @@
 package io.github.binarybaggins.tavernkeeper;
 
 import java.io.IOException;
+import java.util.Set;
 
 import org.jdbi.v3.core.Jdbi;
 import org.slf4j.Logger;
@@ -12,7 +13,13 @@ import io.github.binarybaggins.tavernkeeper.discord.DiscordBot;
 import io.github.binarybaggins.tavernkeeper.discord.commands.CommandRegistry;
 import io.github.binarybaggins.tavernkeeper.discord.commands.PingCommand;
 import io.github.binarybaggins.tavernkeeper.features.guilds.GuildRepository;
+import io.github.binarybaggins.tavernkeeper.features.guilds.activation.GuildFeatureService;
+import io.github.binarybaggins.tavernkeeper.features.guilds.activation.discord.GuildFeatureCommand;
+import io.github.binarybaggins.tavernkeeper.features.guilds.activation.persistence.JdbiGuildFeatureRepository;
 import io.github.binarybaggins.tavernkeeper.features.guilds.persistence.JdbiGuildRepository;
+import io.github.binarybaggins.tavernkeeper.features.guilds.settings.GuildSettingsService;
+import io.github.binarybaggins.tavernkeeper.features.guilds.settings.discord.GuildSettingsCommand;
+import io.github.binarybaggins.tavernkeeper.features.guilds.settings.persistence.JdbiGuildSettingsRepository;
 import io.github.binarybaggins.tavernkeeper.persistence.Database;
 
 public final class App {
@@ -48,8 +55,18 @@ public final class App {
 
         GuildRepository guildRepository = new JdbiGuildRepository(jdbi);
 
+        var guildSettingsService = new GuildSettingsService(
+                new JdbiGuildSettingsRepository(jdbi));
+
+        var guildFeatureService = new GuildFeatureService(
+                new JdbiGuildFeatureRepository(jdbi),
+                Set.of());
+
         var registry = new CommandRegistry();
+
         registry.register(new PingCommand());
+        registry.register(new GuildSettingsCommand(guildSettingsService));
+        registry.register(new GuildFeatureCommand(guildFeatureService));
 
         final DiscordBot bot;
 
